@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "132696758762",
+    "project_id": "geoevent-93638",
+    "storage_bucket": "geoevent-93638.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132696758762:android:7d4e8c047f0491cd26fa93",
+        "android_client_info": {
+          "package_name": "com.example.geoevent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3yFq-vi8RQDTR7WJjY-mvkzIya5vF8G4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
