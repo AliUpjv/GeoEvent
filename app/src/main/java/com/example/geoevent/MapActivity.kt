@@ -3,10 +3,14 @@ package com.example.geoevent
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.view.View
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +23,7 @@ import kotlinx.coroutines.launch
 
 // Classes fictives ou manquantes requises par le code du guide pour compiler
 import androidx.lifecycle.ViewModel
+import com.example.geoevent.util.ConnectivityReceiver
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 class EventViewModel : ViewModel() {
@@ -38,7 +43,7 @@ class MapActivity : AppCompatActivity() {
     private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted -> if (granted) startLocationUpdates() }
-
+    private lateinit var connectivityReceiver: ConnectivityReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -64,6 +69,14 @@ class MapActivity : AppCompatActivity() {
             intent.putExtra("lng", userLng)
             startActivity(intent)
         }
+        connectivityReceiver = ConnectivityReceiver { connected ->
+            val banner = findViewById<TextView>(R.id.tvOfflineBanner)
+            banner.visibility = if (connected) View.GONE else View.VISIBLE
+        }
+        registerReceiver(connectivityReceiver,
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
+
     }
 
     private fun checkLocationPermission() {
@@ -102,5 +115,9 @@ class MapActivity : AppCompatActivity() {
         super.onPause()
         (mapProvider as? OsmMapProvider)?.onPause()
         if (::locationManager.isInitialized) locationManager.removeUpdates {}
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(connectivityReceiver)
     }
 }
