@@ -55,6 +55,9 @@ class AddEventActivity : AppCompatActivity() {
             pickImageLauncher.launch("image/*")
         }
         findViewById<Button>(R.id.btnSave).setOnClickListener { saveEvent() }
+        findViewById<Button>(R.id.btnCancel).setOnClickListener {
+            finish() // ferme l'écran et retourne à la carte
+        }
     }
 
     private fun saveEvent() {

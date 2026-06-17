@@ -21,7 +21,8 @@ import com.example.geoevent.ui.EventViewModel
 import com.example.geoevent.util.ConnectivityReceiver
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
-
+import com.example.geoevent.ui.AuthActivity
+import com.example.geoevent.data.FirebaseAuthRepository
 class MapActivity : AppCompatActivity() {
 
     private val mapProvider: MapProvider = OsmMapProvider()
@@ -67,6 +68,21 @@ class MapActivity : AppCompatActivity() {
             intent.putExtra("lat", userLat)
             intent.putExtra("lng", userLng)
             startActivity(intent)
+        }
+        findViewById<FloatingActionButton>(R.id.fabLogout).setOnClickListener {
+            val authRepo = FirebaseAuthRepository()
+            authRepo.logout()
+            startActivity(Intent(this, AuthActivity::class.java))
+            finish()
+        }
+        val authRepo = FirebaseAuthRepository()
+        findViewById<FloatingActionButton>(R.id.fabProfile).setOnClickListener {
+            val email = authRepo.getCurrentUserEmail() ?: "Non connecté"
+            android.app.AlertDialog.Builder(this)
+                .setTitle("Mon profil")
+                .setMessage("Connecté en tant que :\n$email")
+                .setPositiveButton("OK", null)
+                .show()
         }
     }
 

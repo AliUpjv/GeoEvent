@@ -54,5 +54,11 @@
             android:layout_height="wrap_content"
             android:text="Publier l'événement"
             android:layout_marginTop="16dp"/>
+        <Button android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Annuler"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#888888"/>
     </LinearLayout>
 </ScrollView>

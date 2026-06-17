@@ -23,8 +23,20 @@ class FirebaseAuthRepository : AuthRepository {
     }
 
     override suspend fun getUserRole(uid: String): String {
-        val doc = db.collection("users").document(uid).get().await()
-        return doc.getString("role") ?: "user"
+        return try {
+            val doc = db.collection("users").document(uid).get().await()
+            if (!doc.exists()) {
+                // Le document n'existe pas (vieux compte) alors on le crée
+                db.collection("users").document(uid)
+                    .set(mapOf("role" to "user")).await()
+                "user"
+            } else {
+                doc.getString("role") ?: "user"
+            }
+        } catch (e: Exception) {
+            // En cas d'erreur Firestore, on ne bloque pas la connexion
+            "user"
+        }
     }
 
     override fun logout() = auth.signOut()
