@@ -20,10 +20,24 @@ interface MapProvider {
     // Le conteneur est défini dans activity_main.xml
     fun showMap(container: ViewGroup)
     fun centerOn(lat: Double, lng: Double, zoom: Double)
+    // zoom avant/arrière d'un niveau, pour les boutons +/- et le clavier
+    fun zoomIn()
+    fun zoomOut()
     //ajoute un marker pour un event donné
     fun addMarker(lat: Double, lng: Double, title: String, size: Int = 1): Any
     // supprime un marker d'un event
     fun removeAllMarkers()
     //utilisé pour creer l'event a l'endroit precis et definit ce qui se passe quand l'utilisateur tape sur la carte
     fun setOnMapClickListener(listener: (Double, Double) -> Unit)
+
+    /**
+     * Affiche l'ensemble des événements sur la carte, avec clustering automatique :
+     * - si plusieurs événements sont proches les uns des autres au niveau de zoom actuel,
+     *   ils sont regroupés en un seul marker affichant leur nombre
+     * - sinon chaque événement a son propre marker (dont la taille dépend de son "size")
+     * Le clustering est recalculé automatiquement à chaque changement de zoom.
+     * onMarkerClick est appelé avec l'id de l'event quand on tape sur un marker individuel
+     * (jamais sur un cluster, qui zoome plutôt sur sa zone).
+     */
+    fun setEventMarkers(items: List<MapMarkerItem>, onMarkerClick: (String) -> Unit)
 }

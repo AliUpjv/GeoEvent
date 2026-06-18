@@ -77,5 +77,9 @@ class EventDetailActivity : AppCompatActivity() {
                 }
             }
         }
+
+        findViewById<Button>(R.id.btnBack).setOnClickListener {
+            finish() // referme l'écran et revient à la carte
+        }
     }
 }

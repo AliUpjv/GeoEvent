@@ -58,6 +58,9 @@ class AddEventActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnCancel).setOnClickListener {
             finish() // ferme l'écran et retourne à la carte
         }
+        findViewById<Button>(R.id.btnBack).setOnClickListener {
+            finish() // retourne à la carte sans publier l'événement
+        }
     }
 
     private fun saveEvent() {
