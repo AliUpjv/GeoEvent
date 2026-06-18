@@ -1,3 +1,8 @@
+Groupe 6 : 
+Chahinez MADI
+Kaouthar Sarah TIBA
+Ali LEKHAL
+
 # GeoEvent
 
 Application Android permettant de créer, consulter et liker des événements géolocalisés sur une carte. Un utilisateur peut taper n'importe où sur la carte pour publier un événement à cet endroit (titre, description, photo), voir les événements des autres utilisateurs autour de lui, les liker, et les supprimer s'il en est l'auteur (ou administrateur).
